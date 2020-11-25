@@ -1,0 +1,19 @@
+<launch>
+    <!-- Define parameters for recorder -->
+    <param name="outputDirectory" type="string" value="$(env HOME)/Documents/university/specialCourse/recordedData/" />
+    <param name="outputFileName" type="string" value="realsense_l515_" />
+    <param name="topicName" type="string" value="/camera/depth/image_rect_raw" />
+    <param name="numberOfMessages" type="int" value="3"/>
+
+    <!-- Start the Mynteye SDK -->
+    <include file="$(find realsense2_camera)/launch/demo_pointcloud.launch"/>
+
+    <!-- Record data and save to PCD file -->
+    <node name="pcdRecorder" pkg="special_course" type="pcdRecorder" output="screen"/>
+
+    <!-- Start Viewer if rviz in args -->
+	<arg name="rviz" default="true" />
+    <group if="$(arg rviz)">
+        <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find special_course)/rviz_cfg/realsense-l515.rviz" />
+    </group>
+</launch>
