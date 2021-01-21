@@ -1,6 +1,6 @@
 <launch>
     <!-- Define parameters for recorder -->
-    <param name="outputDirectory" type="string" value="$(env HOME)/Documents/university/specialCourse/recordedData/" />
+    <param name="outputDirectory" type="string" value="$(env HOME)/Documents/university/specialCourse/recordedData/livoxData/indoors/angles/" />
     <param name="outputFileName" type="string" value="livox_" />
     <param name="topicName" type="string" value="/livox/lidar" />
     <param name="numberOfMessages" type="int" value="10"/>
