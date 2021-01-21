@@ -3,7 +3,6 @@
 Code made by Carla Salazar as part of a special course at DTU. In this course, the infrastructure propose in this repository has been prepared to test the efficiency of different computer vision sensors (cameras or lidars). For this purpose, a special target was designed and built. It looks as follows:
 
 ![GitHub Logo](/images/target.png)
-Format: ![Alt Text](url)
 
 With this target and this code, the following information information can be obtained:
   * Distance error to a defined target.
