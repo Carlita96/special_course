@@ -43,7 +43,7 @@ These are the SDKs of the sensors used:
 
 ### Target processing tools
 
-In order to use the targetProcessTool or bitTargetProcessTool, build each of the libraries as follows from the special_course:
+In order to use the targetProcessTool or bigTargetProcessTool, build each of the libraries as follows from the special_course:
 
 `cd ~/catkin_ws/special_course`
 
@@ -57,7 +57,7 @@ In order to use the targetProcessTool or bitTargetProcessTool, build each of the
 
 `make -j4`
 
-Start from the beginning and change `cd tools/targetProcessTool/` for `cd tools/bitTargetProcessTool/` for building that tool.
+Start from the beginning and change `cd tools/targetProcessTool/` for `cd tools/bigTargetProcessTool/` for building that tool.
  
 ## How to use
 
@@ -101,6 +101,8 @@ and run it with the following information:
 
 `./targetProcessTool ~/Documents/pcd.pcd 0 0 1.5 0.1 0`
 
+Try to fit the right center 4x4 target be in red in the first viewer. Then all the other targets will be shown one by one per viewer.
+
 In order to use the bigTargetProcessTool, go to the executable built before:
 
 `cd ~/catkin_ws/special_course/tools/bigTargetProcessTool/build`
@@ -116,3 +118,5 @@ and run it with the following information:
 `./bigTargetProcessTool ~/Documents/pcd.pcd 0 0 1.5 0.2`
 
 The information obtained from this tool will be printed in the terminal.
+
+NOTE: It is important to close the window of the viewer with the cross of the window, as doing Control+C on the terminal would terminate the process and the data like distance error will not be printed.
