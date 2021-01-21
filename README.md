@@ -2,7 +2,7 @@
 
 Code made by Carla Salazar as part of a special course at DTU. In this course, the infrastructure propose in this repository has been prepared to test the efficiency of different computer vision sensors (cameras or lidars). For this purpose, a special target was designed and built. It looks as follows:
 
-![GitHub Logo](/images/target.png)
+![Target](/images/target.png)
 
 With this target and this code, the following information information can be obtained:
   * Distance error to a defined target.
@@ -79,12 +79,13 @@ Different parameters can be changed in the roslaunch files under /launch. For ex
 
 In order to use this tool, change directory to its position and run it with python or python3. Remember to send also the directory which PLY files will be converted to PCDs.
 
-
 `cd ~/catkin_ws/special_course/tools`
 
 `python3 plyToPcd.py ~/Documents/recordedPly`
 
 ### Target processing tools
+
+#### Small targets processing tool
 
 In order to use the targetProcessTool, go to the executable built before:
 
@@ -101,7 +102,13 @@ and run it with the following information:
 
 `./targetProcessTool ~/Documents/pcd.pcd 0 0 1.5 0.1 0`
 
-Try to fit the right center 4x4 target be in red in the first viewer. Then all the other targets will be shown one by one per viewer.
+When running this program, a viewer will show the pointcloud in white and the selected part of the target in red. Try to fit the right center 4x4 target be in red in the first viewer. This can be seen in the next picture. Then, several viewers will open for the other small targets (only the 5x5, 4x4 and 3x3) so it is possible to check whether there is any problem. When closing each window, the distance mean of the red points, the standard deviation and the maximum difference in horizontal and vertical axis will be printed in the terminal.
+
+![Process](/images/targetProcessToolUsage.png)
+
+NOTE: It is important to close the window of the viewer with the cross of the window, as doing Control+C on the terminal would terminate the process and the data like distance error will not be printed.
+
+#### Big target processing tool
 
 In order to use the bigTargetProcessTool, go to the executable built before:
 
@@ -117,6 +124,6 @@ and run it with the following information:
 
 `./bigTargetProcessTool ~/Documents/pcd.pcd 0 0 1.5 0.2`
 
-The information obtained from this tool will be printed in the terminal.
+When running this program, a viewer will show the pointcloud in white and the selected part of the target in red. Try to place the red points in the middle of the target. Then, the distance mean of these points and the standard deviation of this points will be printed in the terminal.
 
 NOTE: It is important to close the window of the viewer with the cross of the window, as doing Control+C on the terminal would terminate the process and the data like distance error will not be printed.
