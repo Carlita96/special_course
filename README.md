@@ -23,6 +23,18 @@ The code is formed by 3 parts:
   * Python file that converts all PLY in directory to PCD saving PLYs to another directory.
   * C++ files for processing the PCD files of the recorded targets to get its accuracy.
   
+
+## Pre-requisites
+
+Some of the pre-requisites are:
+ * Ubuntu 18.04
+ * PCL
+ * ROS Melodic
+ * C++
+ * cmake
+ * Python
+
+  
 ## Installation
 
 Clone the repository in your catkin workspace. Considering the usual ~/catkin_ws it would be as follows:
@@ -58,6 +70,11 @@ In order to use the targetProcessTool or bigTargetProcessTool, build each of the
 `make -j4`
 
 Start from the beginning and change `cd tools/targetProcessTool/` for `cd tools/bigTargetProcessTool/` for building that tool.
+
+
+Apart from building th C++, it is necessary to have installed a pcl tool that allows the visualization. After having PCL installed in the computer, this command can be run from the terminal:
+
+`sudo apt-get install  pcl-tools`
  
 ## How to use
 
@@ -116,10 +133,11 @@ In order to use the bigTargetProcessTool, go to the executable built before:
 
 and run it with the following information:
   1. Directory of PCD file.
-  1. X of center right target.
-  1. Y of center right target.
-  1. Z of center right target.
+  1. X of the center of the target.
+  1. Y of the center of the target.
+  1. Z of the center of the target.
   1. Size of cropbox for the target.
+  1. Boolean to set if depth is Z axis (1) or X axis (0). 1 is default value.
 ,for example:
 
 `./bigTargetProcessTool ~/Documents/pcd.pcd 0 0 1.5 0.2`
