@@ -172,7 +172,7 @@ void TargetProcessTool::processTarget(pcl::PointCloud<pcl::PointXYZ>::Ptr croppe
 				maxY = croppedCloud->points[i].y;
 			}
 		}
-		cout << "Dimension of target is X: " << maxZ-minZ << " meters and Y: " << maxY-minY << " meters." << endl; 
+		cout << "Dimension of target is Z: " << maxZ-minZ << " meters and Y: " << maxY-minY << " meters." << endl; 
 
 		return;
 

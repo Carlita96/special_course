@@ -21,7 +21,7 @@ cout << "Starting program" << endl;
     if (argc != 6) {
 		cout << "Input number of parameters is wrong. Input needed:\n\t- Directory of PCD file." 
 			<< "\n\t- X of center right target.\n\t- Y of center right target.\n\t- Z of center right target."
-			<< "\n\t- Size of cropbox for the target." << endl;
+			<< "\n\t- Size of cropbox for the target.\n\t- Boolean to set if depth is Z axis (1) or X axis (0). 1 is default value." << endl;
 		return 0;
 	} else {	
         std::string fileName = argv[1];
@@ -30,6 +30,13 @@ cout << "Starting program" << endl;
         double centerCropboxY = atof(argv[3]); 
         double centerCropboxZ = atof(argv[4]);
         double sizeBox = atof(argv[5]);
+        bool isDepthZ = true;
+        if (argc == 7 && atoi(argv[6]) == 0) {
+			cout << "Depth axis is X" << endl;
+			isDepthZ = false;
+		} else {
+			cout << "Depth axis is Z" << endl;
+		}
 
         ////////////////////////////////
         // Read cloud
@@ -122,42 +129,83 @@ cout << "Starting program" << endl;
         viewer->addPointCloud<pcl::PointXYZRGB>(colorCroppedCloud, "Point Cloud Output");
         viewer->spin();
 
-        // Calculate mean
-        int count = 0;
-        double mean = 0.0;
-        for (size_t i = 0; i < colorCroppedCloud->points.size(); i++) {
-            mean += colorCroppedCloud->points[i].z;
-            count ++;
+        if (isDepthZ) {
+            /////////////////////////////
+            // Calculate mean
+            int count = 0;
+            double mean = 0.0;
+            for (size_t i = 0; i < croppedCloud->points.size(); i++) {
+                mean += croppedCloud->points[i].z;
+                count ++;
+            }
+            mean = mean / count;
+            cout << "Mean Z is: " << mean << " meters." << endl; 
+            // Calculate standard deviation
+            double standardDeviation = 0.0;
+            for (size_t i = 0; i < croppedCloud->points.size(); i++) {
+                standardDeviation += pow(croppedCloud->points[i].z - mean, 2);
+            }
+            standardDeviation = sqrt(standardDeviation/(count-1));
+            cout << "Standard deviation is: " << standardDeviation << " meters." << endl; 
+            // Calculate dimensions
+            double minX = 1000;
+            double minY = 1000;
+            double maxX = -1000;
+            double maxY = -1000;
+            for (size_t i = 0; i < croppedCloud->points.size(); i++) {
+                if (croppedCloud->points[i].x < minX) {
+                    minX = croppedCloud->points[i].x;
+                }
+                if (croppedCloud->points[i].y < minY) {
+                    minY = croppedCloud->points[i].y;
+                }
+                if (croppedCloud->points[i].x > maxX) {
+                    maxX = croppedCloud->points[i].x;
+                }
+                if (croppedCloud->points[i].y > maxY) {
+                    maxY = croppedCloud->points[i].y;
+                }
+            }
+            cout << "Dimension of target is X: " << maxX-minX << " meters and Y: " << maxY-minY << " meters." << endl; 
+        } else {
+            /////////////////////////////
+            // Calculate mean
+            int count = 0;
+            double mean = 0.0;
+            for (size_t i = 0; i < croppedCloud->points.size(); i++) {
+                mean += croppedCloud->points[i].x;
+                count ++;
+            }
+            mean = mean / count;
+            cout << "Mean X is: " << mean << " meters." << endl; 
+            // Calculate standard deviation
+            double standardDeviation = 0.0;
+            for (size_t i = 0; i < croppedCloud->points.size(); i++) {
+                standardDeviation += pow(croppedCloud->points[i].x - mean, 2);
+            }
+            standardDeviation = sqrt(standardDeviation/(count-1));
+            cout << "Standard deviation is: " << standardDeviation << " meters." << endl; 
+            // Calculate dimensions
+            double minZ = 1000;
+            double minY = 1000;
+            double maxZ = -1000;
+            double maxY = -1000;
+            for (size_t i = 0; i < croppedCloud->points.size(); i++) {
+                if (croppedCloud->points[i].x < minZ) {
+                    minZ = croppedCloud->points[i].z;
+                }
+                if (croppedCloud->points[i].y < minY) {
+                    minY = croppedCloud->points[i].y;
+                }
+                if (croppedCloud->points[i].x > maxZ) {
+                    maxZ = croppedCloud->points[i].z;
+                }
+                if (croppedCloud->points[i].y > maxY) {
+                    maxY = croppedCloud->points[i].y;
+                }
+            }
+            cout << "Dimension of target is Z: " << maxZ-minZ << " meters and Y: " << maxY-minY << " meters." << endl;
         }
-        mean = mean / count;
-        cout << "Mean Z is: " << mean << " meters." << endl; 
-        // Calculate standard deviation
-        double standardDeviation = 0.0;
-        for (size_t i = 0; i < colorCroppedCloud->points.size(); i++) {
-            standardDeviation += pow(colorCroppedCloud->points[i].z - mean, 2);
-        }
-        standardDeviation = sqrt(standardDeviation/(count-1));
-        cout << "Standard deviation is: " << standardDeviation << " meters." << endl; 
-        // Calculate dimensions
-        double minX = 1000;
-        double minY = 1000;
-        double maxX = -1000;
-        double maxY = -1000;
-        for (size_t i = 0; i < colorCroppedCloud->points.size(); i++) {
-            if (colorCroppedCloud->points[i].x < minX) {
-                minX = colorCroppedCloud->points[i].x;
-            }
-            if (colorCroppedCloud->points[i].y < minY) {
-                minY = colorCroppedCloud->points[i].y;
-            }
-            if (colorCroppedCloud->points[i].x > maxX) {
-                maxX = colorCroppedCloud->points[i].x;
-            }
-            if (colorCroppedCloud->points[i].y > maxY) {
-                maxY = colorCroppedCloud->points[i].y;
-            }
-        }
-        cout << "Dimension of target is X: " << maxX-minX << " meters and Y: " << maxY-minY << " meters." << endl; 
 
 
         cout << "Finished program" << endl;
